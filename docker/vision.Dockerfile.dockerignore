@@ -1,0 +1,5 @@
+# Allowlist: only the vision service sources (model weights are downloaded at build time).
+*
+!vision_service/*.py
+!vision_service/requirements.txt
+**/__pycache__

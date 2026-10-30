@@ -1,0 +1,6 @@
+# Allowlist: the frontend sources and the nginx config only.
+*
+!frontend
+frontend/node_modules
+frontend/dist
+!docker/nginx.conf

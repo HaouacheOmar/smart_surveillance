@@ -1,0 +1,23 @@
+# Simulated IP cameras for dev/demo: each sim/*.mp4 is looped as an RTSP stream.
+#   docker compose -f docker/docker-compose.yml -f docker/docker-compose.sim.yml --env-file .env up -d
+# Then add cameras with RTSP URLs rtsp://rtsp:8554/cam1, rtsp://rtsp:8554/cam2 (no credentials).
+# Sample clips (Pexels license): pexels.com/video/4775505 (queue), pexels.com/video/992603 (checkout).
+x-camera: &camera
+  image: smart_surveillance-vision  # reuses the vision image's ffmpeg
+  volumes: ["../sim:/video:ro"]  # repository-root sim/ folder
+  depends_on: [rtsp]
+  restart: unless-stopped
+  entrypoint: ["sh", "-c", "exec ffmpeg -hide_banner -loglevel warning -re -stream_loop -1 -i /video/$$0 -an -c:v libx264 -preset veryfast -tune zerolatency -g 25 -f rtsp rtsp://rtsp:8554/$$1"]
+
+services:
+  rtsp:
+    image: bluenviron/mediamtx:1
+    restart: unless-stopped
+
+  camera-sim-1:
+    <<: *camera
+    command: ["queue.mp4", "cam1"]
+
+  camera-sim-2:
+    <<: *camera
+    command: ["checkout.mp4", "cam2"]

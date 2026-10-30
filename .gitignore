@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+db.sqlite3
+.env
+*.pt
+node_modules/
+dist/
+sim/*.avi
+sim/*.mp4
+.playwright-mcp/
+.impeccable/

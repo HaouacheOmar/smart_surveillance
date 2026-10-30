@@ -1,0 +1,7 @@
+# Allowlist: only what the backend image copies.
+*
+!requirements.txt
+!manage.py
+!config
+!modules
+**/__pycache__
